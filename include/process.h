@@ -16,7 +16,7 @@ public:
   std::string Command();
   std::string Ram();
   long int UpTime();
-  bool operator<(Process const &a) const; // TODO: See src/process.cpp
+  bool operator<(Process const &a) const;
 private:
   int pid_;
   std::string user_;
@@ -24,7 +24,6 @@ private:
   std::string command_;
   std::string ram_;
   long int uptime_;
-  long int jiffies_;
 };
 
 #endif

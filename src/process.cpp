@@ -12,8 +12,10 @@ using std::to_string;
 using std::vector;
 
 Process::Process(int pid)
-    : pid_(pid), user_(LinuxParser::User(pid)),
-      uptime_(LinuxParser::UpTime(pid)) {}
+    : pid_(pid),
+      user_(LinuxParser::User(pid)),
+      uptime_(LinuxParser::UpTime(pid)),
+      command_(LinuxParser::Command(pid)){}
 
 int Process::Pid() { return pid_; }
 
@@ -25,8 +27,7 @@ float Process::CpuUtilization() {
   return cpuUtilization_;
   }
 
-// TODO: Return the command that generated this process
-string Process::Command() { return string(); }
+string Process::Command() { return command_; }
 
 // TODO: Return this process's memory utilization
 string Process::Ram() { return string(); }
