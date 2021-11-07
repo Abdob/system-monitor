@@ -28,10 +28,13 @@ System::System()
 Processor &System::Cpu() { return cpu_; }
 
 vector<Process> &System::Processes() {
-  // vector<int> pids = LinuxParsers::Pids();
-
-  // processes_(pids.size());
-
+  vector<Process> processes;
+  vector<int> pids = LinuxParser::Pids();
+  for(int pid : pids){
+      Process p{pid};
+      processes.push_back(p);
+  }
+  processes_ = processes;
   return processes_;
 }
 
