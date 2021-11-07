@@ -48,7 +48,7 @@ vector<Process> &System::Processes() {
 std::string System::Kernel() { return kernel_; }
 
 float System::MemoryUtilization() {
-  memoryUtilization_ = LinuxParser::MemoryUtilization();
+  memoryUtilization_ = std::max(LinuxParser::MemoryUtilization(), 0.0f);
   return memoryUtilization_;
 }
 

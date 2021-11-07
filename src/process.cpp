@@ -15,7 +15,8 @@ Process::Process(int pid)
     : pid_(pid),
       user_(LinuxParser::User(pid)),
       uptime_(LinuxParser::UpTime(pid)),
-      command_(LinuxParser::Command(pid)){}
+      command_(LinuxParser::Command(pid)),
+      ram_(LinuxParser::Ram(pid)){}
 
 int Process::Pid() { return pid_; }
 
@@ -25,12 +26,11 @@ float Process::CpuUtilization() {
   long int jiffies = LinuxParser::ActiveJiffies(pid_);
   cpuUtilization_ = (float)jiffies / uptime_;
   return cpuUtilization_;
-  }
+}
 
 string Process::Command() { return command_; }
 
-// TODO: Return this process's memory utilization
-string Process::Ram() { return string(); }
+string Process::Ram() { return ram_; }
 
 long int Process::UpTime() {
   long int seconds = uptime_ / sysconf(_SC_CLK_TCK);
