@@ -27,13 +27,20 @@ System::System()
 
 Processor &System::Cpu() { return cpu_; }
 
+bool SortingFunction( Process &a, Process &b){
+    return (a.UpTime() > b.UpTime());
+}
+
 vector<Process> &System::Processes() {
   vector<Process> processes;
   vector<int> pids = LinuxParser::Pids();
-  for(int pid : pids){
-      Process p{pid};
-      processes.push_back(p);
+  for (int pid : pids) {
+    Process p{pid};
+    processes.push_back(p);
   }
+  // sorting by uptime
+  std::sort(processes.begin(), processes.end(), SortingFunction);
+
   processes_ = processes;
   return processes_;
 }
