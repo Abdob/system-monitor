@@ -247,11 +247,11 @@ long LinuxParser::UpTime(int pid) {
   if (stream.is_open()) {
     std::getline(stream, line);
     std::istringstream linestream(line);
-    for (int i = 1; i <= 22; i++) 
+    for (int i = 1; i <= kUpTime_; i++) 
       linestream >> starttime;
     uptime = std::stol(starttime) / sysconf(_SC_CLK_TCK);
     return uptime;
   }
-  return 10;
+  return 0;
 }
 

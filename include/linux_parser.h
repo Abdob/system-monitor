@@ -38,7 +38,8 @@ enum CPUStates {
   kSoftIRQ_,
   kSteal_,
   kGuest_,
-  kGuestNice_
+  kGuestNice_,
+  kUpTime_ = 22
 };
 std::vector<std::string> CpuUtilization();
 long Jiffies();
