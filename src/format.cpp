@@ -1,8 +1,8 @@
 #include "format.h"
 
+#include <iomanip>
 #include <sstream>
 #include <string>
-#include <iomanip>
 
 using std::string;
 
@@ -13,7 +13,7 @@ string Format::ElapsedTime(long seconds) {
   int mins = (seconds / 60) % 60;
   int secs = seconds % 60;
   std::stringstream ss;
-  
+
   ss << std::setw(2) << std::setfill('0') << hours << ":";
   ss << std::setw(2) << std::setfill('0') << mins << ":";
   ss << std::setw(2) << std::setfill('0') << secs << "\n";

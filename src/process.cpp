@@ -12,11 +12,9 @@ using std::to_string;
 using std::vector;
 
 Process::Process(int pid)
-    : pid_(pid),
-      user_(LinuxParser::User(pid)),
-      uptime_(LinuxParser::UpTime(pid)),
-      command_(LinuxParser::Command(pid)),
-      ram_(LinuxParser::Ram(pid)){}
+    : pid_(pid), user_(LinuxParser::User(pid)),
+      uptime_(LinuxParser::UpTime(pid)), command_(LinuxParser::Command(pid)),
+      ram_(LinuxParser::Ram(pid)) {}
 
 int Process::Pid() { return pid_; }
 
@@ -35,7 +33,7 @@ string Process::Ram() { return ram_; }
 long int Process::UpTime() {
   long int seconds = uptime_ / sysconf(_SC_CLK_TCK);
   return seconds;
-  }
+}
 
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function

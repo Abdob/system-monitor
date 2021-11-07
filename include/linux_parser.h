@@ -41,8 +41,8 @@ enum CPUStates {
   kGuestNice_,
   kUTime_ = 14,
   kSTime_ = 15,
-  kCuTime_ =16,
-  kCsTime_ =17,
+  kCuTime_ = 16,
+  kCsTime_ = 17,
   kUpTime_ = 22
 };
 std::vector<std::string> CpuUtilization();

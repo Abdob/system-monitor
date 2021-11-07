@@ -27,8 +27,8 @@ System::System()
 
 Processor &System::Cpu() { return cpu_; }
 
-bool SortingFunction( Process &a, Process &b){
-    return (a.CpuUtilization() > b.CpuUtilization());
+bool SortingFunction(Process &a, Process &b) {
+  return (a.CpuUtilization() > b.CpuUtilization());
 }
 
 vector<Process> &System::Processes() {

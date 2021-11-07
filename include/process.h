@@ -17,6 +17,7 @@ public:
   std::string Ram();
   long int UpTime();
   bool operator<(Process const &a) const;
+
 private:
   int pid_;
   std::string user_;
