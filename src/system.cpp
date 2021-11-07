@@ -21,7 +21,7 @@ system."
 You need to properly format the uptime. Refer to the comments mentioned in
 format. cpp for formatting the uptime.*/
 System::System()
-    : os_(LinuxParser::OperatingSystem()), kernel_(LinuxParser::Kernel()) {}
+    : os_(LinuxParser::OperatingSystem()), kernel_(LinuxParser::Kernel()), memoryUtilization_(0.0f) {}
 
 Processor& System::Cpu() { return cpu_; }
 
@@ -30,8 +30,10 @@ vector<Process>& System::Processes() { return processes_; }
 
 std::string System::Kernel() { return kernel_; }
 
-// TODO: Return the system's memory utilization
-float System::MemoryUtilization() { return 0.0; }
+float System::MemoryUtilization() {
+    memoryUtilization_ = LinuxParser::MemoryUtilization();
+    return memoryUtilization_;
+}
 
 std::string System::OperatingSystem() { return os_; }
 

@@ -7,7 +7,6 @@ class Processor {
   Processor();
   float Utilization();
 
-  // TODO: Declare any necessary private members
  private:
   float utilization_;
   long activeJiffies_;
