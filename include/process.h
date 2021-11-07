@@ -24,6 +24,7 @@ private:
   std::string command_;
   std::string ram_;
   long int uptime_;
+  long int jiffies_;
 };
 
 #endif

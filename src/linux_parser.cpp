@@ -107,21 +107,22 @@ long LinuxParser::Jiffies() { return 0; }
 
 // TODO: Read and return the number of active jiffies for a PID
 long LinuxParser::ActiveJiffies(int pid) {
-  /*string line;
-  string key;
-  string value;
-  std::ifstream filestream(kProcDirectory + "/" + std::to_string(pid) +
-                           kStatusFilename);
-  if (filestream.is_open()) {
-    while (std::getline(filestream, line)) {
-      std::replace(line.begin(), line.end(), ':', ' ');
-      std::istringstream linestream(line);
-      linestream >> key >> value;
-      if (key == "Uid")
-        return value;
+
+  long jiffies = 0;
+  string line;
+  string jiffs;
+  std::ifstream stream(kProcDirectory + "/" + std::to_string(pid) + kStatFilename);
+  if (stream.is_open()) {
+    std::getline(stream, line);
+    std::istringstream linestream(line);
+    for (int i = 1; i <= kCsTime_; i++){
+      linestream >> jiffs;
+      if(i == kUTime_ || i == kSTime_ || i == kCuTime_ || i ==kCsTime_)
+        jiffies += std::stol(jiffs);
     }
+    return jiffies;
   }
-  return value;*/
+  return 0;
 }
 
 long LinuxParser::ActiveJiffies() {
@@ -238,7 +239,7 @@ string LinuxParser::User(int pid) {
   }
   return user;
 }
-#include <iostream>
+
 long LinuxParser::UpTime(int pid) {
   long uptime;
   string line;
@@ -249,7 +250,8 @@ long LinuxParser::UpTime(int pid) {
     std::istringstream linestream(line);
     for (int i = 1; i <= kUpTime_; i++) 
       linestream >> starttime;
-    uptime = std::stol(starttime) / sysconf(_SC_CLK_TCK);
+    // keep uptime at high precision for instantaneous cpu usage
+    uptime = UpTime() * sysconf(_SC_CLK_TCK) - std::stol(starttime);
     return uptime;
   }
   return 0;
