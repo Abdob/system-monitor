@@ -9,19 +9,19 @@
 #include "processor.h"
 
 class System {
- public:
+public:
   System();
-  Processor& Cpu();                   
-  std::vector<Process>& Processes();
-  float MemoryUtilization();          
-  long UpTime();                      // TODO: See src/system.cpp
-  int TotalProcesses();               
-  int RunningProcesses();             // TODO: See src/system.cpp
+  Processor &Cpu();
+  std::vector<Process> &Processes();
+  float MemoryUtilization();
+  long UpTime();
+  int TotalProcesses();
+  int RunningProcesses();
   std::string Kernel();
   std::string OperatingSystem();
 
   // TODO: Define any necessary private members
- private:
+private:
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
   std::string os_;
@@ -29,6 +29,7 @@ class System {
   float memoryUtilization_;
   int totalProcesses_;
   int runningProcesses_;
+  long uptime_;
 };
 
 #endif

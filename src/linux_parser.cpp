@@ -51,8 +51,8 @@ string LinuxParser::Kernel() {
 // BONUS: Update this to use std::filesystem
 vector<int> LinuxParser::Pids() {
   vector<int> pids;
-  DIR* directory = opendir(kProcDirectory.c_str());
-  struct dirent* file;
+  DIR *directory = opendir(kProcDirectory.c_str());
+  struct dirent *file;
   while ((file = readdir(directory)) != nullptr) {
     // Is this a directory?
     if (file->d_type == DT_DIR) {
@@ -74,7 +74,7 @@ float LinuxParser::MemoryUtilization() {
 
   std::ifstream stream(kProcDirectory + kMeminfoFilename);
   if (stream.is_open()) {
-    for(int i=0; i<3; i++){
+    for (int i = 0; i < 3; i++) {
       std::string line;
       std::getline(stream, line);
       std::istringstream linestream(line);
@@ -89,8 +89,18 @@ float LinuxParser::MemoryUtilization() {
   return util;
 }
 
-// TODO: Read and return the system uptime
-long LinuxParser::UpTime() { return 0; }
+long LinuxParser::UpTime() {
+  string value;
+  string line;
+  std::ifstream stream(kProcDirectory + kUptimeFilename);
+  if (stream.is_open()) {
+    std::getline(stream, line);
+    std::istringstream linestream(line);
+    linestream >> value;
+  }
+  long uptime = std::atoll(value.c_str());
+  return uptime;
+}
 
 // TODO: Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { return 0; }
@@ -98,7 +108,6 @@ long LinuxParser::Jiffies() { return 0; }
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid [[maybe_unused]]) { return 0; }
-
 
 long LinuxParser::ActiveJiffies() {
   string cpu, user, nice, system;
@@ -111,11 +120,10 @@ long LinuxParser::ActiveJiffies() {
   }
   long userJiffies = std::atol(user.c_str());
   long niceJiffies = std::atol(nice.c_str());
-  long systemJiffies =  std::atol(system.c_str());
+  long systemJiffies = std::atol(system.c_str());
 
   return userJiffies + niceJiffies + systemJiffies;
 }
-
 
 long LinuxParser::IdleJiffies() {
   string cpu, user, nice, system, idle;
@@ -126,11 +134,10 @@ long LinuxParser::IdleJiffies() {
     std::istringstream linestream(line);
     linestream >> cpu >> user >> nice >> system >> idle;
   }
-  long idleJiffies =  std::atol(idle.c_str());
+  long idleJiffies = std::atol(idle.c_str());
   return idleJiffies;
 }
 
-// TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() { return {}; }
 
 int LinuxParser::TotalProcesses() {
@@ -141,10 +148,10 @@ int LinuxParser::TotalProcesses() {
   std::ifstream stream(kProcDirectory + kStatFilename);
   std::string line;
   if (stream.is_open()) {
-    while(std::getline(stream,line)){
+    while (std::getline(stream, line)) {
       std::istringstream linestream(line);
       linestream >> field >> value;
-      if(field == "processes"){
+      if (field == "processes") {
         processes = std::atoi(value.c_str());
         return processes;
       }
@@ -161,10 +168,10 @@ int LinuxParser::RunningProcesses() {
   std::ifstream stream(kProcDirectory + kStatFilename);
   std::string line;
   if (stream.is_open()) {
-    while(std::getline(stream,line)){
+    while (std::getline(stream, line)) {
       std::istringstream linestream(line);
       linestream >> field >> value;
-      if(field == "procs_running"){
+      if (field == "procs_running") {
         processes = std::atoi(value.c_str());
         return processes;
       }

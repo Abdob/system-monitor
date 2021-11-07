@@ -3,11 +3,11 @@
 #include "linux_parser.h"
 
 class Processor {
- public:
+public:
   Processor();
   float Utilization();
 
- private:
+private:
   float utilization_;
   long activeJiffies_;
   long idleJiffies_;
