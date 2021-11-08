@@ -22,9 +22,9 @@ private:
   int pid_;
   std::string user_;
   float cpuUtilization_;
+  long int uptime_;
   std::string command_;
   std::string ram_;
-  long int uptime_;
 };
 
 #endif

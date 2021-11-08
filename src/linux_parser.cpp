@@ -205,13 +205,13 @@ string LinuxParser::Command(int pid) {
                        kCmdlineFilename);
   if (stream.is_open()) {
     std::getline(stream, command);
-    return command;
+    return command.substr(0,30);
   }
   return command;
 }
 
 string LinuxParser::Ram(int pid) {
-  string line, key, value;
+  string line, key, value, mbvalue;
   std::ifstream stream(kProcDirectory + "/" + std::to_string(pid) +
                        kStatusFilename);
   if (stream.is_open()) {
@@ -219,10 +219,15 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(line);
       linestream >> key >> value;
       if (key == "VmSize:")
-        return value;
+        break;
     }
   }
-  return value;
+  // convert kb to mb
+  int ram = std::atoi(value.c_str())/1024;
+  std::stringstream ss;
+  ss << ram;
+  mbvalue = ss.str();
+  return mbvalue;
 }
 
 string LinuxParser::Uid(int pid) {
